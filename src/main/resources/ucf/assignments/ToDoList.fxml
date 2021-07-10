@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -28,7 +27,6 @@
                 </TableView>
                 <Button fx:id="ButtonDelete" layoutX="438.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickDelete" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac;" text="Delete" />
                 <Button fx:id="ButtonClear" layoutX="154.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickClear" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac;" text="Clear" />
-                <ComboBox fx:id="Select" layoutX="549.0" layoutY="57.0" onAction="#SelectItem" prefWidth="150.0" promptText="Select" />
                 <MenuBar layoutY="1.0" prefHeight="28.0" prefWidth="800.0">
                     <menus>
                         <Menu fx:id="MenuOpen" mnemonicParsing="false" onAction="#openFile" text="Open" />
@@ -46,6 +44,7 @@
             <DatePicker fx:id="datePickerOption" layoutX="428.0" layoutY="416.0" prefHeight="26.0" prefWidth="110.0" />
             <CheckBox fx:id="Progress" layoutX="557.0" layoutY="420.0" mnemonicParsing="false" text="Completed" textFill="WHITE" />
             <Button fx:id="ButtonAdd" layoutX="652.0" layoutY="416.0" mnemonicParsing="false" onAction="#OnButtonClickAdd" prefHeight="26.0" prefWidth="122.0" style="-fx-background-color: #979dac;" text="Add" />
+            <TextField fx:id="FilterField" layoutX="538.0" layoutY="57.0" />
             </children>
         </AnchorPane>
     </center>
