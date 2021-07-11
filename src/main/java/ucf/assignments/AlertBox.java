@@ -7,6 +7,25 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+//Class is used for Alert Boxes which pops up on to the User's screen when they give invalid input
+
+/*
+Create a new function called display in which takes the title and message
+(this is to increase flexibility of what will pop up in the alert){
+    Create a new Stage
+    Specify its modality
+    Set the title string as a Title
+    Set a min width
+
+    Create a new label and set it as the message
+    Create a button
+    Set action so that when the user clicks on the button, the window closes
+
+    Create a new scene which calls the layout (a VBox which has both the label and the button)
+    set Scene
+    show and Wait
+}
+ */
 public class AlertBox {
     public static void display(String title, String message){
         Stage window = new Stage();

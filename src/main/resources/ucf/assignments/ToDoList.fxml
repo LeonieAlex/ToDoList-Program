@@ -25,13 +25,16 @@
                         <TableColumn fx:id="table_progress" onEditCommit="#changeTableProgress" prefWidth="110.0" text="Progress" />
                     </columns>
                 </TableView>
-                <Button fx:id="ButtonDelete" layoutX="438.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickDelete" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac;" text="Delete" />
-                <Button fx:id="ButtonClear" layoutX="154.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickClear" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac;" text="Clear" />
+                <Button fx:id="ButtonDelete" layoutX="438.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickDelete" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac; -fx-cursor: hand;" text="Delete" />
+                <Button fx:id="ButtonClear" layoutX="154.0" layoutY="460.0" mnemonicParsing="false" onAction="#OnButtonClickClear" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #979dac; -fx-cursor: hand;" text="Clear" />
                 <MenuBar layoutY="1.0" prefHeight="28.0" prefWidth="800.0">
                     <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                     <items>
                         <Menu fx:id="MenuOpen" mnemonicParsing="false" onAction="#openFile" text="Open" />
-                        <Menu fx:id="MenuSave" mnemonicParsing="false" onAction="#MenuSave" text="Save" />
-                        <Menu fx:id="MenuSaveAs" mnemonicParsing="false" onAction="#MenuSaveAs" text="Save As" />
+                              <Menu fx:id="MenuSave" mnemonicParsing="false" onAction="#MenuSave" text="Save" />
+                              <Menu fx:id="MenuSaveAs" mnemonicParsing="false" onAction="#MenuSaveAs" text="Save As" />
+                     </items></Menu>
                     </menus>
                 </MenuBar>
             <Text fill="WHITE" layoutX="102.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To Do List">
@@ -43,8 +46,9 @@
             <TextField fx:id="Description" layoutX="221.0" layoutY="416.0" prefHeight="26.0" prefWidth="192.0" />
             <DatePicker fx:id="datePickerOption" layoutX="428.0" layoutY="416.0" prefHeight="26.0" prefWidth="110.0" />
             <CheckBox fx:id="Progress" layoutX="557.0" layoutY="420.0" mnemonicParsing="false" text="Completed" textFill="WHITE" />
-            <Button fx:id="ButtonAdd" layoutX="652.0" layoutY="416.0" mnemonicParsing="false" onAction="#OnButtonClickAdd" prefHeight="26.0" prefWidth="122.0" style="-fx-background-color: #979dac;" text="Add" />
+            <Button fx:id="ButtonAdd" layoutX="652.0" layoutY="416.0" mnemonicParsing="false" onAction="#OnButtonClickAdd" prefHeight="26.0" prefWidth="122.0" style="-fx-background-color: #979dac; -fx-cursor: hand;" text="Add" />
             <TextField fx:id="FilterField" layoutX="538.0" layoutY="57.0" />
+            <Button fx:id="HelpButton" layoutX="746.0" layoutY="35.0" mnemonicParsing="false" onAction="#OnClickHelp" style="-fx-background-color: #979dac; -fx-cursor: hand;" text="Help?" />
             </children>
         </AnchorPane>
     </center>

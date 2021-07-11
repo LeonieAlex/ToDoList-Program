@@ -1,13 +1,44 @@
 package ucf.assignments;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/*
+This class for the Task (which basically consists of the Name, Description, Due Date and the progress (incomplete or not))
+
+Create a simple string for the Task Name, Task Description and Progress
+Create a string for the Date
+
+    Task Function which takes the Task Name, Task Description, Date and Progress
+        take all the Task Name, Task Desc, Date and Progress
+        Set the Date to a YYYY-MM-DD format
+
+    getTaskName function
+        return the TaskName
+
+    setTaskName that takes the TaskName
+        make it a simpleStringProperty
+
+    getTaskDesc function
+        return the TaskDesc
+
+    setTaskDesc that takes the TaskDesc
+        make it a simpleStringProperty
+
+    getDate function
+        return the TaskName
+
+    setDate that takes the Date
+        set it
+
+    getProgress function
+        return the Progress
+
+    setProgress that takes the Progress
+        make it a simpleStringProperty
+ */
 public class Task {
     private SimpleStringProperty TaskName, TaskDesc, Progress;
     private String date;

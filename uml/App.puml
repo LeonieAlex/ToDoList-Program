@@ -1,0 +1,103 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ToDoListController {
+-TableView<Task> tableView;
+-TableColumn<Task, String> table_task;
+-TableColumn<Task, String> table_description;
+-TableColumn<Task, String> table_date;
+-TableColumn<Task, String> table_progress;
+-Button ButtonDelete
+-Button ButtonClear
+-TextField FilterField
+-Menu MenuOpen
+-Menu MenuSave
+-Menu MenuSaveAs
+-TextField Name
+-TextField Description
+-DatePicker datePickerOption
+-CheckBox Progress
+-Button ButtonAdd
+-Button HelpButton
++ObservableList<Task> task
+
++MenuSave()
++MenuSaveAs()
++OnClickHelp()
++OnButtonClickDelete()
++OnButtonClickClear()
++OnButtonClickAdd()
++changeTableDate()
++changeTableDescCellEvent()
++changeTableProgress()
++openFile()
++initialize()
++getTask()
+}
+
+class HelpController {
+-Button NextButton
+-Button Back
++NextButton()
++OnClickBackToMain()
+}
+
+class HelpPage2Controller {
+-TableView<> tableView
+-Button BackToMain
+-Button Back
++OnClickBack()
++OnClickBackToMain()
+}
+
+class Task{
+-simpleStringProperty TaskName
+-simpleStringProperty TaskDesc
+-simpleStringProperty Progress
+-String Date
++Task()
++getTaskName()
++setTaskName()
++getTaskDesc()
++setTaskDesc()
++getProgress()
++setProgress()
++getDate()
++setDate()
+}
+
+class DateValidation{
++dateValidation()
++checkDate()
+}
+
+class AlertBox{
++display()
+}
+
+class TextFileReader{
++TextFileReader()
++countLines()
++initList()
+}
+
+class JsonFile{
++ToJson()
++ReadJson()
+}
+
+class App{
++main()
++start()
+}
+
+javafx.Application <|-- App
+App - CreateNewTask
+App - HomePageController
+App - ToDoListController
+ToDoListController <.. Task
+HomePageController <.. List
+ToDoListController <-- TextFileReader
+HomePageController <-- TextFileReader
+
+@enduml
