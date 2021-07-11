@@ -86,11 +86,12 @@ public class ToDoListController implements Initializable {
     @FXML
     private Button HelpButton;
 
-    final ObservableList<Task> task = FXCollections.observableArrayList();
+    public final ObservableList<Task> task = FXCollections.observableArrayList();
 
     @FXML
     void MenuSave(ActionEvent event) throws IOException {
-        JsonFile.ToJson();
+        JsonFile.ToJson(task);
+
     }
 
     @FXML
@@ -181,7 +182,7 @@ public class ToDoListController implements Initializable {
         String desc = Description.getText();
         LocalDate date = datePickerOption.getValue();
 
-        if(name.length()<=0 || name.length()>=256 || desc.length()<=0 || desc.length()>=256){
+        if(!Check.CheckLength(name) && !Check.CheckLength(desc)){
             AlertBox.display("Error", "There must be more than 0 and less than 256 characters");
         } else {
             if(Progress.isSelected()){
@@ -220,11 +221,10 @@ public class ToDoListController implements Initializable {
         String New = editedCell.getNewValue().toString();
         String Old = editedCell.getOldValue().toString();
 
-        if(DateValidation.dateValidation(New))
-            taskSelected.setProgress(New);
-        else{
-            AlertBox.display("Error", "Not the right format or invalid date");
-            taskSelected.setProgress(Old);
+        if(Check.ChangeDate(New, Old)==1){
+            taskSelected.setDate(New);
+        } else{
+            taskSelected.setDate(Old);
         }
         tableView.refresh();
     }
@@ -250,11 +250,10 @@ public class ToDoListController implements Initializable {
         String New = editedCell.getNewValue().toString();
         String Old = editedCell.getOldValue().toString();
 
-        if(New.length()<=0 || New.length()>=256){
-            AlertBox.display("Error", "There must be more than 0 and less than 256 characters");
-            taskSelected.setTaskDesc(Old);
-        } else {
+        if(Check.ChangeDescription(New, Old)==0){
             taskSelected.setTaskDesc(New);
+        } else{
+            taskSelected.setTaskDesc(Old);
         }
         tableView.refresh();
     }
@@ -366,5 +365,31 @@ public class ToDoListController implements Initializable {
         task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
 
         return task;
+    }
+
+    //for testing purposes lol
+    static String CountRows(String Name, String Desc, LocalDate date, String Progress){
+        ObservableList<Task> task = FXCollections.observableArrayList();
+
+        //Repeat method of AddButton
+        if(!Check.CheckLength(Name) && !Check.CheckLength(Desc)){
+            AlertBox.display("Error", "There must be more than 0 and less than 256 characters");
+        } else {
+            task.add(new Task(Name, Desc, date, Progress));
+            task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        }
+
+        Integer count = task.size();
+
+        //repeat method of clearing table
+        task.clear();
+
+        Integer ClearCount = task.size();
+
+        return count + " " + ClearCount;
+    }
+
+    static Integer CountCompleted(){
+        return 0;
     }
 }

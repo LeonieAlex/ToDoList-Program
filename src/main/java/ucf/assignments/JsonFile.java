@@ -1,6 +1,7 @@
 package ucf.assignments;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
 
 import java.io.*;
@@ -12,21 +13,20 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class JsonFile {
-    public static void ToJson() throws IOException {
-        Writer writer = Files.newBufferedWriter(Paths.get("App.json"));
-        Gson gson = new Gson();
-        gson.toJson(ToDoListController.class, writer);
-        writer.flush();
+    //error here
+    public static void ToJson(ObservableList<Task> task){
+        /*task.setTaskName(Name);
+        task.setTaskDesc(Desc);
+        task.setDate(Date);
+        task.setProgress(2000);*/
+        System.out.println(new Gson().toJson(task));
     }
 
-    public void readJson(ObservableList<Task> task){
-        for (Task temp: task) {
-            String tempName = temp.getTaskName();
-            String tempDesc = temp.getTaskDesc();
-            String tempDate = temp.getDate();
-            LocalDate localDate = LocalDate.parse(tempDate);
-            String tempProgress = temp.getProgress();
-            task.add(new Task(tempName, tempDesc, localDate, tempProgress));
-        }
+    //Havent even tried this
+    public void readJson(ObservableList<Task> task) throws IOException {
+        Writer writer = Files.newBufferedWriter(Paths.get("App.json"));
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        gson.toJson(Task.class, writer);
+        writer.flush();
     }
 }

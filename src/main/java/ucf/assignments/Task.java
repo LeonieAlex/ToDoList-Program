@@ -40,8 +40,8 @@ Create a string for the Date
         make it a simpleStringProperty
  */
 public class Task {
-    private SimpleStringProperty TaskName, TaskDesc, Progress;
-    private String date;
+    public SimpleStringProperty TaskName, TaskDesc, Progress;
+    public String date;
 
     public Task(String TaskName, String TaskDesc, LocalDate date, String Progress) {
         this.TaskName = new SimpleStringProperty(TaskName);
@@ -81,5 +81,15 @@ public class Task {
 
     public void setProgress(String Progress) {
         this.Progress = new SimpleStringProperty(Progress);
+    }
+
+    @Override
+    public String toString() {
+        return "Task [Task_name="
+                + TaskName
+                + ", description="
+                + TaskDesc
+                + ", Date="
+                + date + ", Progress=" + Progress + "]";
     }
 }
