@@ -40,31 +40,31 @@ Create a string for the Date
         make it a simpleStringProperty
  */
 public class Task {
-    public SimpleStringProperty TaskName, TaskDesc, Progress;
+    public String TaskName, TaskDesc, Progress;
     public String date;
 
     public Task(String TaskName, String TaskDesc, LocalDate date, String Progress) {
-        this.TaskName = new SimpleStringProperty(TaskName);
-        this.TaskDesc = new SimpleStringProperty(TaskDesc);
+        this.TaskName = TaskName;
+        this.TaskDesc = TaskDesc;
         String DateFormat = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.date = DateFormat;
-        this.Progress = new SimpleStringProperty(Progress);
+        this.Progress = Progress;
     }
 
     public String getTaskName() {
-        return TaskName.get();
+        return TaskName;
     }
 
     public void setTaskName(String TaskName) {
-        this.TaskName = new SimpleStringProperty(TaskName);
+        this.TaskName = TaskName;
     }
 
     public String getTaskDesc() {
-        return TaskDesc.get();
+        return TaskDesc;
     }
 
     public void setTaskDesc(String TaskDesc) {
-        this.TaskDesc = new SimpleStringProperty(TaskDesc);
+        this.TaskDesc = TaskDesc;
     }
 
     public String getDate() {
@@ -76,20 +76,25 @@ public class Task {
     }
 
     public String getProgress() {
-        return Progress.get();
+        return Progress;
     }
 
     public void setProgress(String Progress) {
-        this.Progress = new SimpleStringProperty(Progress);
+        this.Progress = Progress;
     }
 
-    @Override
+    /*
+    Override
+    ToString()
+        return the format of how a Json should look like
+     */
+   @Override
     public String toString() {
-        return "Task [Task_name="
-                + TaskName
-                + ", description="
-                + TaskDesc
-                + ", Date="
-                + date + ", Progress=" + Progress + "]";
+        return "{\"TaskName\":"
+                + "\"" + TaskName + "\""
+                + ", \"TaskDesc\":"
+                + "\"" + TaskDesc + "\""
+                + ", \"date\":"
+                + "\"" + date + "\"" + ", \"Progress\":" + "\"" + Progress + "\"" + "}";
     }
 }

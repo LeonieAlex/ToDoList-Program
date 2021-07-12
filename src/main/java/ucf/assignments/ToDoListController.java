@@ -66,9 +66,6 @@ public class ToDoListController implements Initializable {
     private Menu MenuSave;
 
     @FXML
-    private Menu MenuSaveAs;
-
-    @FXML
     private TextField Name;
 
     @FXML
@@ -88,20 +85,21 @@ public class ToDoListController implements Initializable {
 
     public final ObservableList<Task> task = FXCollections.observableArrayList();
 
+    /*
+    Call ToJson Method from JsonFile
+     */
     @FXML
     void MenuSave(ActionEvent event) throws IOException {
         JsonFile.ToJson(task);
-
     }
 
+    /*
+    Call readJson method from JsonFile
+     */
     @FXML
-    void MenuSaveAs(ActionEvent event) {
-        System.out.println("You clicked SaveAs");
-    }
-
-    @FXML
-    void MenuOpen(ActionEvent event) {
-        System.out.println("You clicked MenuOpen");
+    void openFile(ActionEvent event) throws IOException {
+        JsonFile.readJson();
+        System.out.println("You clicked on open file");
     }
 
     /*
@@ -208,11 +206,9 @@ public class ToDoListController implements Initializable {
         Create a Old String which is the Task's Cell's old Value
 
         Create an if statement to call the Date Validation method
-        if(Date Validation for the New String is true)
-            set the Cell to the New input
-        else
-            An alert box will alert the user about the input having the wrong format or invalid date (Gregorian date or not)
-            set the Cell to the Old input
+        Call Change Date to see if the cell should return the new or Old value
+        if statement to check if it's the old value
+            Alert Box
         refresh table
      */
     @FXML
@@ -221,10 +217,9 @@ public class ToDoListController implements Initializable {
         String New = editedCell.getNewValue().toString();
         String Old = editedCell.getOldValue().toString();
 
-        if(Check.ChangeDate(New, Old)==1){
-            taskSelected.setDate(New);
-        } else{
-            taskSelected.setDate(Old);
+        taskSelected.setDate(Check.ChangeDate(New, Old));
+        if(Check.ChangeDate(New, Old).equals(Old)){
+            AlertBox.display("Error", "Not the right format or invalid date");
         }
         tableView.refresh();
     }
@@ -236,12 +231,10 @@ public class ToDoListController implements Initializable {
         Create a New String which is the Task's Cell's new Value
         Create a Old String which is the Task's Cell's old Value
 
-        Create an if statement to check if the input is valid
-        if(the length is lesser than 0 or larger than 256)
-            alert user that it is invalid
-            set to Old Input
-        else
-            set to new input
+        Call the Check function to see if the new or old string will be returned
+        Change the cell with the new or old string
+        if statement to check if it's the old value
+            Alert Box
         refresh table
      */
     @FXML
@@ -250,10 +243,9 @@ public class ToDoListController implements Initializable {
         String New = editedCell.getNewValue().toString();
         String Old = editedCell.getOldValue().toString();
 
-        if(Check.ChangeDescription(New, Old)==0){
-            taskSelected.setTaskDesc(New);
-        } else{
-            taskSelected.setTaskDesc(Old);
+        taskSelected.setTaskDesc(Check.ChangeDescription(New, Old));
+        if(Check.ChangeDescription(New, Old).equals(Old)){
+            AlertBox.display("Error", "There must be more than 0 and less than 256 characters");
         }
         tableView.refresh();
     }
@@ -261,36 +253,28 @@ public class ToDoListController implements Initializable {
     /*
       This allows input added to the Editable Cell to have a format, therefore if it is not the right format, it wont work
 
-          Create a new Task which is the selected table Row
-          Create a New String which is the Task's Cell's new Value
-          Create a Old String which is the Task's Cell's old Value
+        Create a new Task which is the selected table Row
+        Create a New String which is the Task's Cell's new Value
+        Create a Old String which is the Task's Cell's old Value
 
-          Create an if statement to call the Date Validation method
-          if(the New input is equal to "Completed" or "Incomplete")
-              set the Cell to the New input
-          else
-              An alert box will alert the user about writing the wrong input
-              set the Cell to the Old input
-          refresh table
+        Call Check class which returns whether it would return the New or Old string
+        Change the cell to the New or Old String
+        if statement to check if it's the old value
+            Alert Box
+        refresh table
        */
     @FXML
     void changeTableProgress(TableColumn.CellEditEvent editedCell) {
         Task taskSelected =  tableView.getSelectionModel().getSelectedItem();
         String New = editedCell.getNewValue().toString();
         String Old = editedCell.getOldValue().toString();
-        if(New.equals("Completed") || New.equals("Incomplete")){
-            taskSelected.setProgress(New);
-        } else {
+        taskSelected.setProgress(Check.ChangeProgress(New, Old));
+        if(Check.ChangeProgress(New, Old).equals(Old)){
             AlertBox.display("Error", "Task must either be Completed or Incomplete");
-            taskSelected.setProgress(Old);
         }
         tableView.refresh();
     }
 
-    @FXML
-    void openFile(ActionEvent event) {
-
-    }
 
     /*
     This method is to do a lot of things..
@@ -368,6 +352,25 @@ public class ToDoListController implements Initializable {
     }
 
     //for testing purposes lol
+    /*
+    CountRows(Which takes input of what the tester wants to add (not really useful to be honest))
+        Create a new Observable List
+        if(the length of the Name and Description is valid)
+            alert box
+        else
+            Add task
+            add another task
+
+        count task size
+
+        remove one task
+        count task size
+
+        clear task
+        count task size
+
+        return the string of the concatenation of all the integers
+     */
     static String CountRows(String Name, String Desc, LocalDate date, String Progress){
         ObservableList<Task> task = FXCollections.observableArrayList();
 
@@ -378,18 +381,99 @@ public class ToDoListController implements Initializable {
             task.add(new Task(Name, Desc, date, Progress));
             task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
         }
-
         Integer count = task.size();
+
+        task.remove(1);
+        Integer CountRemove = task.size();
 
         //repeat method of clearing table
         task.clear();
-
         Integer ClearCount = task.size();
 
-        return count + " " + ClearCount;
+        return count + " " + CountRemove + " " + ClearCount;
     }
 
+    /*
+    Integer CountCompleted()
+        create a new Observable List
+        create a count which equals to 0
+
+        add new tasks
+
+        loop through task
+            if the the test progress is "completed"
+                count
+
+        return count
+     */
     static Integer CountCompleted(){
-        return 0;
+        ObservableList<Task> task = FXCollections.observableArrayList();
+        Integer count=0;
+
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+
+        for(Task test : task) {
+            String completion = test.getProgress();
+            if(completion.equals("Completed"))
+                count++;
+        }
+        return count;
+    }
+
+    /*
+    Integer CountIncomplete()
+        create a new Observable List
+        create a count which equals to 0
+
+        add new tasks
+
+        loop through task
+            if the the test progress is "Incomplete"
+                count
+
+        return count
+     */
+    static Integer CountIncomplete(){
+        ObservableList<Task> task = FXCollections.observableArrayList();
+        Integer count=0;
+
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+
+        for(Task test : task) {
+            String completion = test.getProgress();
+            if(completion.equals("Incomplete"))
+                count++;
+        }
+        return count;
+    }
+
+    /*
+    Integer CountAll()
+        create a new Observable List
+        create a count which equals to 0
+
+        add new tasks
+
+        loop through task
+            count
+
+        return count
+     */
+    static Integer CountAll(){
+        ObservableList<Task> task = FXCollections.observableArrayList();
+        Integer count=0;
+
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+
+        for(Task test : task) {
+            count++;
+        }
+        return count;
     }
 }

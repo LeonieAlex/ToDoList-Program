@@ -33,7 +33,6 @@
                      <items>
                         <Menu fx:id="MenuOpen" mnemonicParsing="false" onAction="#openFile" text="Open" />
                               <Menu fx:id="MenuSave" mnemonicParsing="false" onAction="#MenuSave" text="Save" />
-                              <Menu fx:id="MenuSaveAs" mnemonicParsing="false" onAction="#MenuSaveAs" text="Save As" />
                      </items></Menu>
                     </menus>
                 </MenuBar>
