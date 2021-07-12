@@ -24,12 +24,14 @@ public class JsonFile {
         }
     }
      */
-    public static void ToJson(ObservableList<Task> task){
+    public static void ToJson(ObservableList<Task> task) throws IOException {
+        File myObj = new File("App.json");
         try {
-            Writer writer = Files.newBufferedWriter(Paths.get("./json/App.json"));
-            writer.write(String.valueOf(task));
+            FileWriter writer = new FileWriter(myObj);
+            Writer bw = new BufferedWriter(writer);
+            bw.write(String.valueOf(task));
 
-            writer.flush();
+            bw.flush();
         }
         catch (Exception e) {
             System.out.println(e);
@@ -41,25 +43,29 @@ public class JsonFile {
         Create reader which connects to a buffered reader which reads a Json
         Create a Gson builder
         Create an array of what is read
-        Call TransferContents
+        return TransferContents
     }
      */
-    public static void readJson() throws IOException {
-        Reader reader = Files.newBufferedReader(Paths.get("./json/App.json"));
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    public static ObservableList<Task> readJson() throws IOException {
+        Reader reader = Files.newBufferedReader(Paths.get("App.json"));
+        Gson gson = new Gson();
         Task[] enums = gson.fromJson(reader, Task[].class);
-        transferContents(enums);
+
+        return transferContents(enums);
     }
 
     /*
-    pseudo
+    transferContents
+        Create Observable List
+        loop through
+            add
+        return Observable List
      */
     public static ObservableList<Task> transferContents(Task[] enums){
         ObservableList<Task> task = FXCollections.observableArrayList();
         for(Task test : enums) {
             task.add(test);
         }
-        System.out.println(task);
         return task;
     }
 

@@ -33,6 +33,10 @@ class ToDoListController {
 +openFile()
 +initialize()
 +getTask()
+CountRows()
+CountCompleted()
+CountIncomplete()
+CountAll()
 }
 
 class HelpController {
@@ -64,6 +68,7 @@ class Task{
 +setProgress()
 +getDate()
 +setDate()
++toString()
 }
 
 class DateValidation{
@@ -73,12 +78,6 @@ class DateValidation{
 
 class AlertBox{
 +display()
-}
-
-class TextFileReader{
-+TextFileReader()
-+countLines()
-+initList()
 }
 
 class JsonFile{
@@ -91,13 +90,26 @@ class App{
 +start()
 }
 
+class Check{
+CheckLength()
+ChangeDate()
+ChangeDescription()
+ChangeProgress()
+}
+
+class JsonFile{
++ToJson()
++readJson()
++transferContents()
+}
+
 javafx.Application <|-- App
-App - CreateNewTask
-App - HomePageController
 App - ToDoListController
-ToDoListController <.. Task
-HomePageController <.. List
-ToDoListController <-- TextFileReader
-HomePageController <-- TextFileReader
+App - HelpController
+App - HelpPage2Controller
+ToDoListController <-- Task
+ToDoListController <-- Check
+Check <-- DateValidation
+ToDoListController <-- JsonFile
 
 @enduml

@@ -19,8 +19,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -95,11 +94,11 @@ public class ToDoListController implements Initializable {
 
     /*
     Call readJson method from JsonFile
+    set items to TableView
      */
     @FXML
     void openFile(ActionEvent event) throws IOException {
-        JsonFile.readJson();
-        System.out.println("You clicked on open file");
+        tableView.setItems(JsonFile.readJson());
     }
 
     /*
@@ -353,44 +352,64 @@ public class ToDoListController implements Initializable {
 
     //for testing purposes lol
     /*
-    CountRows(Which takes input of what the tester wants to add (not really useful to be honest))
-        Create a new Observable List
-        if(the length of the Name and Description is valid)
-            alert box
-        else
-            Add task
-            add another task
+    CountAdd
+    Create a Observable List
+    Add tasks
+    Count the size of the task
 
-        count task size
-
-        remove one task
-        count task size
-
-        clear task
-        count task size
-
-        return the string of the concatenation of all the integers
+    return count
      */
-    static String CountRows(String Name, String Desc, LocalDate date, String Progress){
+    static Integer CountAdd(){
         ObservableList<Task> task = FXCollections.observableArrayList();
 
-        //Repeat method of AddButton
-        if(!Check.CheckLength(Name) && !Check.CheckLength(Desc)){
-            AlertBox.display("Error", "There must be more than 0 and less than 256 characters");
-        } else {
-            task.add(new Task(Name, Desc, date, Progress));
-            task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
-        }
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
         Integer count = task.size();
+
+        return count;
+    }
+    /*
+       Count Remove
+            Create a Observable List
+            Add tasks
+            remove index 1
+            Count the size of the task
+
+       return count
+    */
+    static Integer CountRemove(){
+        ObservableList<Task> task = FXCollections.observableArrayList();
+
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
 
         task.remove(1);
         Integer CountRemove = task.size();
 
-        //repeat method of clearing table
-        task.clear();
-        Integer ClearCount = task.size();
+        return CountRemove;
+    }
 
-        return count + " " + CountRemove + " " + ClearCount;
+    /*
+   CountClear
+   Create a Observable List
+   Add tasks
+   Clear task
+   Count the size of the task
+
+   return count
+    */
+    static Integer CountClear(){
+        ObservableList<Task> task = FXCollections.observableArrayList();
+
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+
+        task.clear();
+        Integer CountClear = task.size();
+
+        return CountClear;
     }
 
     /*
@@ -475,5 +494,69 @@ public class ToDoListController implements Initializable {
             count++;
         }
         return count;
+    }
+
+    /*
+    Integer CheckJson()
+        create a new Observable List
+        add new tasks
+
+        Put the observable list to a Json file
+        Create a new observable list which is the taken from a JsonFile
+
+        for(loop_
+            if the string from the observable list are equal
+                return 1
+            else
+                return 0
+
+        return 0
+     */
+    static Integer CheckJson() throws IOException {
+        ObservableList<Task> task = FXCollections.observableArrayList();
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+
+        JsonFile.ToJson(task);
+        ObservableList<Task> output =  JsonFile.readJson();
+
+        for (int i = 0; i < task.size(); i++){
+            if(task.get(i).toString().equals(output.get(i).toString())){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    /*
+    Integer CheckSaveJson()
+        create a new Observable List
+        add new tasks
+
+        Put the observable list to a Json file
+
+        Read App.json file
+        Scan
+            if it has contents
+                return 1
+        return 0
+     */
+    static Integer CheckSaveJson() throws IOException {
+        ObservableList<Task> task = FXCollections.observableArrayList();
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Incomplete"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+        task.add(new Task("Hw","MATH", LocalDate.of(2002, Month.JUNE, 20), "Completed"));
+
+        JsonFile.ToJson(task);
+
+        File myObj = new File("App.json");
+        Scanner myReader = new Scanner(myObj);
+        if(myReader.hasNext()){
+            return 1;
+        }
+        return 0;
     }
 }

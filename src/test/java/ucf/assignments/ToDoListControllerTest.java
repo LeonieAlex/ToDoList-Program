@@ -2,6 +2,7 @@ package ucf.assignments;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -14,16 +15,46 @@ A user shall be able to clear the list of all items
  */
 class ToDoListControllerTest {
     /*
-    To check whether Add, Remove and Clearing table is possible
-        actual string is 2 1 0
-        expected is call CountRows from ToDoListController
+    To check whether Add
+        actual string is 2
+        expected is call CountAdd from ToDoListController
 
         assert
      */
     @Test
-    void addRemoveAndClearTable(){
-        String actual= "2 1 0";
-        String expected = ToDoListController.CountRows("Java Hw", "Due tomorrow Cop3330 to do list assignment", LocalDate.of(2021, Month.JULY, 11), "Incomplete");;
+    void CheckAdd(){
+        Integer actual= 2;
+        Integer expected = ToDoListController.CountAdd();
+
+        assertEquals(actual, expected);
+    }
+
+    /*
+    To check whether Remove
+        actual string is 2
+        expected is call CountAdd from ToDoListController
+
+        assert
+     */
+    @Test
+    void CheckRemove(){
+        Integer actual= 2;
+        Integer expected = ToDoListController.CountRemove();
+
+        assertEquals(actual, expected);
+    }
+
+    /*
+    To check whether Clear
+        actual string is 2
+        expected is call CountAdd from ToDoListController
+
+        assert
+     */
+    @Test
+    void CheckClear(){
+        Integer actual= 0;
+        Integer expected = ToDoListController.CountClear();
 
         assertEquals(actual, expected);
     }
@@ -69,6 +100,36 @@ class ToDoListControllerTest {
     void CheckAll(){
         Integer expected = ToDoListController.CountAll();
         Integer actual = 3;
+
+        assertEquals(actual, expected);
+    }
+
+    /*
+    CheckJson
+    set actual as 1
+    set expected as method CheckJson call from ToDoListController
+
+    assert
+     */
+    @Test
+    void CheckJson() throws IOException {
+        Integer actual = 1;
+        Integer expected = ToDoListController.CheckJson();
+
+        assertEquals(actual, expected);
+    }
+
+    /*
+    CheckSaveJson
+    set actual as 1
+    set expected as method CheckSaveJson call from ToDoListController
+
+    assert
+     */
+    @Test
+    void CheckSaveJson() throws IOException {
+        Integer actual = 1;
+        Integer expected = ToDoListController.CheckSaveJson();
 
         assertEquals(actual, expected);
     }
